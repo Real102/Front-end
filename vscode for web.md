@@ -24,7 +24,7 @@ system:  win10 x64
 
 ### 安装步骤
 
-第一步：当然是先安装依赖（这里巨坑:sweat_drops:）
+#### 第一步：当然是先安装依赖（这里巨坑:sweat_drops:）
 
 ```
 ➜  vscode (master)   yarn
@@ -70,7 +70,7 @@ Error: ENOENT: no such file or directory, stat 'E:\code\vscode\vscodeNew\out\vs\
 好吧，继续谷歌吧。到这里官方文档暂时就用不上了。
 查了一会，发现运行 `yarn web` 前需要先 `gulp watch`，既然如此，那就试试吧
 
-第二步： gulp 打包
+#### 第二步： gulp 打包
 
 ```
 ➜  vscode (master)   gulp watch
@@ -83,15 +83,25 @@ Error: ENOENT: no such file or directory, stat 'E:\code\vscode\vscodeNew\out\vs\
 ![JS-stacktrace](https://github.com/Real102/resourceLibrary/raw/master/img/vscode/JS-stacktrace.png  "JS-stacktrace")
 
 js 栈溢出了:sob:。查了一下，据说是 V8 引擎的问题。
-目前我也是卡在这里了，暂时还没找到具体解决方案，如果找到了会继续更新出来的
 
+记得好像是 issue 中也有提过，如果直接运行 `gulp watch` 的话可能会丢失后面的这个字段 `--max_old_space_size=4095` 导致栈溢出。所以换一下执行命令：
 
+```
+➜  vscode (master)   npm run gulp --max_old_space_size=4095
+```
 
+![npm-run-gulp](https://github.com/Real102/resourceLibrary/raw/master/img/vscode/npm-run-gulp.png  "npm-run-gulp")
 
+这里忽略重复的命令 `--max_old_space_size=4095` 不小心复制多了一份。
 
-<!-- <details>
-<summary>展开查看</summary>
-<pre><code>
-System.out.println("Hello to see U!");
-</code></pre>
-</details> -->
+等了大概 2min 左右就运行完成了！
+
+#### 第三步，也是最后一步： yarn web！
+
+```
+➜  vscode (master)   yarn web
+```
+![vscode](https://github.com/Real102/resourceLibrary/raw/master/img/vscode/vscode.png  "vscode")
+
+完成！
+现在就可以开开心心的 debug vs code了！
